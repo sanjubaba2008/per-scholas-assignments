@@ -5,31 +5,26 @@ import java.time.LocalDate;
 public class CheckingAccount extends Account {
 
 	//properties
+	
 	private static int routingNumber;
 	private int accountNumber;
-	private double checkingBalance;
+	private double checkingBalance ;
 	private LocalDate dateCreated;
 	
 	public CheckingAccount() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	public CheckingAccount(String userName, int userSsn, String userAddress, String bankName, String bankAddress,
-			double annualInterestRate, double tax, double balance, int routingNumber, int accountNumber, LocalDate dateCreated, double checkingBalance) {
-		super(userName, userSsn, userAddress, bankName, bankAddress, annualInterestRate, tax, balance);
-		CheckingAccount.routingNumber = routingNumber;
-		this.accountNumber = accountNumber;
-		this.dateCreated = dateCreated;
-		this.setCheckingBalance(checkingBalance);
-		// TODO Auto-generated constructor stub
-	}
 	
-	public CheckingAccount(String userName, int userSsn, String userAddress, String bankName, String bankAddress,LocalDate dateCreated) {
-		super(userName, userSsn, userAddress, bankName, bankAddress);
-		this.dateCreated = dateCreated;
+	public CheckingAccount(String userName, String password, boolean hasPriviledgedAccount, boolean hascreditCard,
+			boolean hasCheckingAccount, boolean hasSavingAccount, double checkingBalance) {
+		super(userName, password, hasPriviledgedAccount, hascreditCard, hasCheckingAccount, hasSavingAccount);
 		// TODO Auto-generated constructor stub
+		this.checkingBalance = checkingBalance;
+		this.dateCreated = LocalDate.now();
 	}
-	public static int getRoutingNumber() {
+
+  public static int getRoutingNumber() {
 		return routingNumber;
 	}
 	public static void setRoutingNumber(int routingNumber) {
@@ -41,12 +36,7 @@ public class CheckingAccount extends Account {
 	public void setAccountNumber(int accountNumber) {
 		this.accountNumber = accountNumber;
 	}
-	public LocalDate getDateCreated() {
-		return dateCreated;
-	}
-	public void setDateCreated(LocalDate dateCreated) {
-		this.dateCreated = dateCreated;
-	}
+	
 	
 	public double getCheckingBalance() {
 		return checkingBalance;
@@ -55,23 +45,46 @@ public class CheckingAccount extends Account {
 		this.checkingBalance = checkingBalance;
 	}
 	
+	public double getBalance() {
+		
+		
+		return this.checkingBalance;
+		
+	}
+	
+	
 	@Override
 	public double deposit(double depositAmount) {
 		// TODO Auto-generated method stub
-		this.checkingBalance = checkingBalance + depositAmount;
-		System.out.println("you have succesfully deposited" + depositAmount);
-		return checkingBalance;
+		this.checkingBalance = this.checkingBalance + depositAmount;
+		System.out.println("you have succesfully deposited $" + depositAmount);
+		return this.checkingBalance;
 	}
 	@Override
 	public double withdraw(double withdrawAmount) {
 		// TODO Auto-generated method stub
-		this.checkingBalance = checkingBalance - withdrawAmount;
-		System.out.println("you have succesfully deposited" + withdrawAmount);
-		return checkingBalance;
+		if(this.checkingBalance >= withdrawAmount && !(this.hasPriviledgedAccount)) {
+		this.checkingBalance = this.checkingBalance - withdrawAmount;
+		System.out.println("You've successfully withdrawn $"+withdrawAmount + " from your checking account." );
+		
+		}//end if
+		else if(this.hasPriviledgedAccount) {
+			this.checkingBalance = this.checkingBalance - withdrawAmount;
+		}
+		
+	     else {
+			System.out.println("Alert!! You do not have enough balance.");
+		}
+		return this.checkingBalance;
+	}
+	public void updateBalance(double balance) {
+		this.setCheckingBalance(balance);
+		
+		
 	}
 	@Override
 	public String toString() {
-		return "CheckingAccount [Name = " + getUserName() + ", accountNumber=" + accountNumber + ", checkingBalance=" + checkingBalance
+		return "CheckingAccount : [userName = " + this.getUserName()+ ", checkingBalance=" + this.checkingBalance
 				+ ", dateCreated=" + dateCreated + "]";
 	}
 }

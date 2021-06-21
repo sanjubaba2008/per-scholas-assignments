@@ -1,5 +1,6 @@
 package com.perscholas.bankingApplication;
 
-public class PriviledgedAccount {
-
+public class PriviledgedAccount  {
+	
+	
 }

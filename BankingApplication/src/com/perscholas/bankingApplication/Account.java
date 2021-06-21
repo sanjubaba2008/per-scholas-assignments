@@ -1,7 +1,7 @@
 package com.perscholas.bankingApplication;
 
 
-public class Account {
+public abstract class Account {
 //	user will have to enter all the required information 
 //	like, name, account number,account   type   and   initial   balance
 //	and   using   the   switch   case   statement   they   canselect the 
@@ -21,42 +21,44 @@ public class Account {
 	
 	// declaring properties
 	private String userName;
+	private String password;
 	private int userSsn;
 	private String userAddress;
-	private String bankName;
+	public static final String BANK_NAME = "PER-SCHOLAS";
 	private String bankAddress;
 	private double annualInterestRate;
 	private double tax;
-	private double balance;
+	boolean hasPriviledgedAccount;
+	boolean hascreditCard;
+	boolean hasCheckingAccount;
+	boolean hasSavingAccount;
 	
 	
+	
+
+
 	//constructors
-	public Account(String userName, int userSsn, String userAddress, String bankName, String bankAddress,
-			double annualInterestRate, double tax, double balance) {
+    public Account() {
+		
+	}
+	
+	
+
+	public Account(String userName, String password, boolean hasPriviledgedAccount, boolean hascreditCard,
+			boolean hasCheckingAccount, boolean hasSavingAccount) {
 		super();
 		this.userName = userName;
-		this.userSsn = userSsn;
-		this.userAddress = userAddress;
-		this.bankName = bankName;
-		this.bankAddress = bankAddress;
-		this.annualInterestRate = annualInterestRate;
-		this.tax = tax;
-		this.balance = balance;
+		this.password = password;
+		this.hasPriviledgedAccount = hasPriviledgedAccount;
+		this.hascreditCard = hascreditCard;
+		this.hasCheckingAccount = hasCheckingAccount;
+		this.hasSavingAccount = hasSavingAccount;
+		
 	}
 
-	public Account() {
-		
-	}
-	public Account(String userName, int userSsn, String userAddress, String bankName, String bankAddress
-			) {
-		super();
-		this.userName = userName;
-		this.userSsn = userSsn;
-		this.userAddress = userAddress;
-		this.bankName = bankName;
-		this.bankAddress = bankAddress;
-		
-	}
+
+
+
 	//getter and setter
 	public String getUserName() {
 		return userName;
@@ -76,12 +78,8 @@ public class Account {
 	public void setUserAddress(String userAddress) {
 		this.userAddress = userAddress;
 	}
-	public String getBankName() {
-		return bankName;
-	}
-	public void setBankName(String bankName) {
-		this.bankName = bankName;
-	}
+	
+	
 	public String getBankAddress() {
 		return bankAddress;
 	}
@@ -100,32 +98,29 @@ public class Account {
 	public void setTax(double tax) {
 		this.tax = tax;
 	}
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 	//deposit method
-	public double deposit(double depositAmount) {
-		this.balance = balance + depositAmount;
-		System.out.println("you have succesfully deposited" + depositAmount);
-		return balance;
-		
-	}
-	public double withdraw(double withdrawAmount) {
-		this.balance = balance - withdrawAmount;
-		System.out.println("you have succesfully withdrew" + withdrawAmount);
-		return balance;
-	}
-	public double getBalance() {
-		return balance;
-	}
-	public void setBalance(double balance) {
-		this.balance = balance;
-	}
+	public abstract double deposit(double depositAmount);
+	public abstract double withdraw(double withdrawAmount);
+	public abstract void updateBalance(double balance);
+	public abstract double getBalance();
+	
 	
 	//toString method
 	@Override
 	public String toString() {
-		return "Account [userName=" + userName + ", userSsn=" + userSsn + ", userAddress=" + userAddress + ", bankName="
-				+ bankName + ", bankAddress=" + bankAddress + ", annualInterestRate=" + annualInterestRate + ", tax="
-				+ tax + ", balance=" + balance + "]";
+		return "Account [userName=" + userName  + ", userAddress=" + userAddress + ", bankName="
+				+ BANK_NAME + ", bankAddress=" + bankAddress + ", annualInterestRate=" + annualInterestRate + ", tax="
+				+ tax +  "]";
 	}
+
+	
 	
 	
 }
